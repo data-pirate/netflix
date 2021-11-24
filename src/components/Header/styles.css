@@ -1,0 +1,41 @@
+.header{
+    display: flex;
+    height: 4em;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 1em;
+}
+
+.logo{
+    width: 8em;
+    cursor: pointer;
+}
+
+
+/* links css begin */
+
+.links{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: gray;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.search-and-notifications{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search{
+    margin-right: 1em;
+    cursor: pointer;
+}
+
+.notifications{
+    margin-right: 1em;
+    cursor: pointer;
+}
