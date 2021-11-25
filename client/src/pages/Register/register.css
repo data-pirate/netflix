@@ -85,6 +85,7 @@
 
 input:focus{
     outline: none;
+    background: transparent;
 }
 
 .name{
