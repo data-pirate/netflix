@@ -1,0 +1,17 @@
+.left{
+    width: 100%;
+    padding: 0 2em;
+    overflow-y: scroll;
+    max-height: 100vh;
+    /* transition: all 1s ease-in-out; */
+}
+
+
+/* hide the scroll bar but still can scroll */
+.left::-webkit-scrollbar {
+    width: 0 !important
+}
+
+.left.logged-in{
+    width: 70%;
+}

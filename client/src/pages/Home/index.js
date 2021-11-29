@@ -1,15 +1,22 @@
-import React from 'react'
-import Left from './../../components/Left'
-import Right from './../../components/Right'
-import './style.css'
+import React, { useState, useEffect } from "react";
+import Left from "../../components/Left";
+import Right from "../../components/Right";
+import axios from "axios";
+import "./style.css";
 
-function Home() {
-    return (
-        <div className="container">
-            <Left />
-            <Right />
-        </div>
-    )
+function Home(props) {
+  const [loggedIn, setLoggedIn] = useState(false);
+  function handleLogin() {
+    setLoggedIn(!loggedIn);
+  }
+
+  return (
+    <div className="container">
+      {/* <button onClick={handleLogin}>Login</button> */}
+      <Left type={props.type} loggedIn={loggedIn} />
+      <Right loggedIn={loggedIn} />
+    </div>
+  );
 }
 
-export default Home
+export default Home;

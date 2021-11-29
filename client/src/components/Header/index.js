@@ -1,23 +1,27 @@
-import React from 'react'
-import Links from './Links';
-import Logo from './Logo';
-import Search from './Search';
+import React from "react";
+import { Link } from "react-router-dom";
+import Logo from "./Logo";
+import Search from "./Search";
 import "./styles.css";
 
 const links = ["Home", "Movies", "Series", "DVD"];
 
-function Header() {
-    return (
-        <div className="header">
-            <Logo/>
-            <div className="links">
-            {
-                links.map(each => <Links name = {each}/>)
-            }
-            </div>
-            <Search/>
-        </div>
-    )
+function Header(props) {
+  return (
+    <div className="header">
+      <Logo />
+      <div className="links">
+        {props.loggedIn
+          ? links.map((each) => (
+              <Link className="link" to={`/${each.toLowerCase()}`}>{each}</Link>
+            ))
+          : ["Login", "Register"].map((each) => (
+            <Link className="link" to={`/${each.toLowerCase()}`}>{each}</Link>
+            ))}
+      </div>
+      <Search />
+    </div>
+  );
 }
 
 export default Header;

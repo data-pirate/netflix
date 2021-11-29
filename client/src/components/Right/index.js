@@ -1,8 +1,9 @@
 import React from 'react'
+import './right.css'
 
-function Right() {
+function Right(props) {
     return (
-        <div className="right">
+        <div  className={`right ${props.loggedIn ? "logged-in" : ""}`}>
             
         </div>
     )

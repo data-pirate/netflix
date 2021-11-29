@@ -1,0 +1,16 @@
+.right{
+    width: 0%;
+    height: 100vh;
+    max-height: 100vh;
+    background: #141414;
+    -webkit-box-shadow: 3px 0px 73px 1px rgba(173,173,173,0.5);
+    -moz-box-shadow: 3px 0px 73px 1px rgba(173,173,173,0.5);
+    box-shadow: 3px 0px 73px 1px rgba(173,173,173,0.5);
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    transition: all 1s ease;
+}
+
+.right.logged-in{
+    width: 30%;
+}
