@@ -5,7 +5,7 @@ import axios from "axios";
 import "./style.css";
 
 function Home(props) {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   function handleLogin() {
     setLoggedIn(!loggedIn);
   }

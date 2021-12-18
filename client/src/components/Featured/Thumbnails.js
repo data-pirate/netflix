@@ -9,7 +9,7 @@ function Thumbnails(props) {
     
     function scroll() {
         let maxScrollLeft = ref.current.getBoundingClientRect().x;
-        ref.current.style.transform = `translateX(-${maxScrollLeft -300}px)`
+        ref.current.style.transform = `translateX(-${maxScrollLeft - 300}px)`
     }
 
 
@@ -18,9 +18,9 @@ function Thumbnails(props) {
                 <div className="slider" ref = {ref}>
                     {props.thumbs.map((thumb) =>{
                         return (
-                            <div>
-                                <img className="thumbnail m-l-1" src= {thumb.src} alt= {thumb.name} />
-                            </div>
+                            <>
+                                <img key={thumb.name} className="thumbnail m-l-1" src= {thumb.src} alt= {thumb.name} />
+                            </>
                         )
                     })}
                 </div>

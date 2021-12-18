@@ -1,6 +1,7 @@
 const verify = require("../middlewares/verifyTokens");
 const router = require("express").Router();
 const List = require("../models/List");
+const Movie = require("../models/Movie");
 
 /**
  * get list
@@ -12,22 +13,21 @@ router.get("/", verify, async (req, res) => {
   let lists = [];
   try {
     if (typeQuery) {
-		if(genreQuery){
-			lists = await List.aggregate([
-				{$sample: {$size: 10}},
-				{$match: {type: typeQuery, genre: genreQuery}}
-			])
-		}
-		else{
-			lists = await List.aggregate([
-				{$sample: {$size: 10}},
-				{$match: {type: typeQuery}}
-			])
-		}
-    }else{
-		lists = await List.aggregate([{$sample: {$size: 10}}]);
-	}
-	res.status(200).json(lists);
+      if (genreQuery) {
+        lists = await List.aggregate([
+          { $sample: { size: 10 } },
+          { $match: { type: typeQuery, genre: genreQuery } },
+        ]);
+      } else {
+        lists = await List.aggregate([
+          { $sample: { size: 10 } },
+          { $match: { type: typeQuery } },
+        ]);
+      }
+    } else {
+      lists = await List.aggregate([{ $sample: { size: 10 } }]);
+    }
+    res.status(200).json(lists);
   } catch (err) {
     res
       .status(500)
@@ -43,6 +43,7 @@ router.post("/new", verify, async (req, res) => {
   if (req.data.isAdmin) {
     try {
       const newList = new List(req.body);
+      await newList.save();
       res.status(200).json(newList);
     } catch (err) {
       res

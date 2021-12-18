@@ -13,10 +13,10 @@ function Header(props) {
       <div className="links">
         {props.loggedIn
           ? links.map((each) => (
-              <Link className="link" to={`/${each.toLowerCase()}`}>{each}</Link>
+              <Link key={each} className="link" to={`/${each.toLowerCase()}`}>{each}</Link>
             ))
           : ["Login", "Register"].map((each) => (
-            <Link className="link" to={`/${each.toLowerCase()}`}>{each}</Link>
+            <Link key={each} className="link" to={`/${each.toLowerCase()}`}>{each}</Link>
             ))}
       </div>
       <Search />

@@ -46,6 +46,22 @@ router.put("/delete/:id", verify, async (req, res) => {
   }
 });
 
+
+/**
+ * get featured movie
+ */
+
+router.get("/featured", verify, async (req, res) => {
+  try {
+    const movie = await Movie.aggregate([{ $sample: { size: 1 } }]);
+    res.status(200).json(movie);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: `server error for featured movie error: \n ${err}` });
+  }
+});
+
 /**
  * get movie
  * for admin and all the other user
@@ -64,20 +80,6 @@ router.get("/:id", verify, async (req, res) => {
   }
 });
 
-/**
- * get featured movie
- */
-
-router.get("/featured", verify, async (req, res) => {
-  try {
-    const movie = await Movie.aggregate({ $sample: { $size: 1 } });
-    res.status(200).json(movie);
-  } catch (err) {
-    res
-      .status(500)
-      .json({ message: `server error for featured movie error: \n ${err}` });
-  }
-});
 
 
 /**

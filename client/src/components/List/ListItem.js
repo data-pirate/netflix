@@ -1,14 +1,41 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Icon from '@mdi/react'
 import { mdiStar, mdiMotionPlay, mdiThumbUp, mdiThumbDown, mdiCloseThick } from '@mdi/js'
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function ListItem(props) {
     const [isHovered, setisHovered] = useState(false);
     const icons = [mdiMotionPlay, mdiThumbUp, mdiThumbDown, mdiCloseThick];
+    const [movie, setMovie] = useState(null);
 
-    const trailer = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4";
+    
+    useEffect(()=>{
+        let mounted = true;
+        const getMovie = async ()=>{
+            try{
+                const response = await axios.get('/api/movies/' + props.id, {
+                    headers: {
+                        token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYThhZTFjMGFiOTUxMGU2ZmFmN2I2MyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzOTU2MDUxOSwiZXhwIjoxNjQwMTY1MzE5fQ.IDinyge3-6KBdkicL1YneMc5-SZz0HbJ-ihnOZi68IA"
+                    }
+                })
+                if(mounted){
+                    setMovie(response.data);
+                }
+            }catch(err){
+                console.log(err);
+            }
+        }
+        getMovie();
+        return () => mounted = false;
+    }, [props.id])
+
     return (
-        <li className="list-item" key={props.key}
+        <Link to='/watch'
+            state= {{id: props.id}}
+        >
+        <li className="list-item"
+            key={props.id + 'xyz'}
             onMouseEnter={() => { setisHovered(true) }}
             onMouseLeave={() => { setisHovered(false) }}
         >
@@ -16,7 +43,7 @@ function ListItem(props) {
                 isHovered ? (
                     <>
                         <div className="hover-visible">
-                            <video src={trailer} autoPlay={true} loop />
+                            <video src={movie.trailer} autoPlay={true} loop />
                             <div className="hover-controls">
                                 {icons.map(path => {
                                     return (
@@ -34,9 +61,9 @@ function ListItem(props) {
                             </div>
                         </div>
                     </>
-                ) :
+                ) : movie !== null ?
                     <>
-                        <img src={props.image} alt={props.title} />
+                        <img src={movie.poster} alt={movie.title} />
                         <div className="rating-and-season">
                             <div className="rating">
                                 <Icon
@@ -46,23 +73,25 @@ function ListItem(props) {
                                     name="Rating"
                                     className="rating-logo"
                                 />
-                                {props.rating}/10
+                                {movie.imdb.rating}/10
                             </div>
 
                             <div className="seasons">
                                 {
-                                    props.type === "series" ? `${props.seasons} seasons` : 'Movie'
+                                    movie.type === "series" ? `X seasons` : 'Movie'
                                 }
                             </div>
                         </div>
                         <div className="movie-title">
                             <p>
-                                {props.title}
+                                {movie.title}
                             </p>
                         </div>
                     </>
+                : <></>
             }
         </li>
+        </Link>
     )
 }
 
