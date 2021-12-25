@@ -1,0 +1,113 @@
+.widgets{
+    margin: 1em;
+    width: 100%;
+    display: flex;
+}
+
+.small{
+    flex: 1;
+    height: 20em;
+    -webkit-box-shadow: 4px -1px 15px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px -1px 15px -2px rgba(0,0,0,0.75);
+    box-shadow: 4px -1px 15px -2px rgba(0,0,0,0.75);
+    border-radius: 8px;
+    padding: 0.8em;
+    margin-right: 1em;
+}
+
+.widget-table{
+    width: 100%;
+    border-spacing: 1em;
+}
+
+.table-row{
+    text-align: left;
+}
+
+.widget-button{
+    text-transform: capitalize;
+    border: none;
+    border-radius: 8px;
+}
+
+.success{
+    background-color: #e5faf2;
+    color: #3bb077;
+}
+
+.declined{
+    background-color: #fff0f1;
+    color: #d95087;
+}
+
+.pending{
+    background-color: #ebf1fe;
+    color: grey;
+}
+
+.large{
+    flex: 2;
+    height: 20em;
+    -webkit-box-shadow: 4px -1px 15px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px -1px 15px -2px rgba(0,0,0,0.75);
+    box-shadow: 4px -1px 15px -2px rgba(0,0,0,0.75);
+    border-radius: 8px;
+    padding: 0.8em;
+    margin-right: 1em;
+    overflow-y: scroll;
+}
+
+.table-data{
+    text-transform: capitalize;
+}
+
+.widget-list{
+    height: 100%;
+    overflow: scroll;
+}
+
+.widget-title{
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.widget-list-item{
+    display: flex;
+    margin: 0.5em 0;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ban{
+    width: 5em;
+    height: 2em;
+    background: red;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    border: none;
+    margin-right: 1em;
+    cursor: pointer;
+}
+
+.user-details{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.user-name{
+    margin: 0 1em;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.widget-thumbnails{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 0;
+    object-fit: cover;
+}
