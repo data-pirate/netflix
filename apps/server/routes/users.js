@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const CryptoJS = require("crypto-js");
 const verify = require("../middlewares/verifyTokens");
+const cors = require("cors");
 
 /**
  * AGENDA:
@@ -39,11 +40,11 @@ router.put("/:id", verify, async (req, res) => {
         updatedUser = await User.findByIdAndUpdate(
           req.params.id,
           {
-            $set: req.body
+            $set: req.body,
           },
           { new: true }
         );
-      }else{
+      } else {
         updatedUser = await User.findByIdAndUpdate(
           req.params.id,
           {
@@ -68,7 +69,7 @@ router.put("/:id", verify, async (req, res) => {
  * authicates and updates the user
  */
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", verify, async (req, res) => {
   if (req.data.isAdmin) {
     try {
       const updatedUser = await User.findByIdAndDelete(req.params.id);
@@ -85,17 +86,21 @@ router.delete("/:id", async (req, res) => {
  * get user
  */
 
-router.get("/find/:id", async (req, res) => {
-  try {
-    const user = User.findById(req.params.id);
-    if (user) {
-      const { password, ...info } = user._doc;
-      res.status(200).json(info);
-    } else {
-      res.status(404).json({ message: "user not found for the given id" });
+router.get("/find/:id", verify, async (req, res) => {
+  if (req.data.id === req.params.id || req.data.isAdmin) {
+    try {
+      const user = User.findById(req.params.id);
+      if (user) {
+        const { password, ...info } = user._doc;
+        res.status(200).json(info);
+      } else {
+        res.status(404).json({ message: "user not found for the given id" });
+      }
+    } catch (err) {
+      res.status(500).json({ message: "Server error" });
     }
-  } catch (err) {
-    res.status(500).json({ message: "Server error" });
+  } else {
+    res.status(403).json({ message: "Not authenticated" });
   }
 });
 
@@ -103,12 +108,13 @@ router.get("/find/:id", async (req, res) => {
  * all users
  */
 
-router.get("/", async (req, res) => {
+router.get("/",cors(), verify, async (req, res) => {
   try {
     if (req.data.isAdmin) {
       const users = req.query.new
         ? await User.find().limit(10)
         : await User.find();
+      res.status(200).json(users);
     }
   } catch (err) {
     res.status(500).json({ message: "Server error" });

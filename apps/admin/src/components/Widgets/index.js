@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
 import WidgetItem from './WidgetItem'
 
 import './widgets.css'
+import axios from 'axios';
 
 const users = [
     {
@@ -34,13 +36,29 @@ function Button({type}){
 
 
 function Widget() {
+
+    const [newUsers, setNewUsers] = useState([]);
+
+    useEffect(() => {
+        async function getNewUserData(){
+            const res = await axios.get('/api/users?new=true', {
+                headers:{
+                    token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYThhZTFjMGFiOTUxMGU2ZmFmN2I2MyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY0MDQwODU5MiwiZXhwIjoxNjQxMDEzMzkyfQ.yFXYoQcURw_y6jofBNysNQEQL-rgX5fTL1FHZbbfa50"
+                }
+            });
+            setNewUsers(res.data);
+        }
+        getNewUserData();
+    }, [])
+
+
     return (
         <div className='widgets'>
             <div className="small">
                 <span className="widget-title">New Members</span>
                 <ul className="widget-list">
                     {
-                        users.map(user=> <WidgetItem { ...user } key={user.name} />)
+                        newUsers.map(user=> <WidgetItem { ...user } key={user._id} />)
                     }
                 </ul>
             </div>

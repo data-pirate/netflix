@@ -1,10 +1,11 @@
 import React from "react";
+import Table from '../../components/Table'
 
 function Users() {
 
   return (
     <div className="users">
-      Users page
+      <Table/>
     </div>
   );
 }
