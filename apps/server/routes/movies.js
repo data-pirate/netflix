@@ -57,17 +57,31 @@ router.get("/featured", verify, async (req, res) => {
     res.status(200).json(movie);
   } catch (err) {
     res
-      .status(500)
-      .json({ message: `server error for featured movie error: \n ${err}` });
+    .status(500)
+    .json({ message: `server error for featured movie error: \n ${err}` });
   }
 });
+
+
+/**
+ * get all movies
+ */
+
+router.get("/all", verify, async (req, res)=>{
+  try{
+    const movies = await Movie.find({}, {title: 1});
+    res.status(200).json(movies);
+  }catch(err){
+    res.status(500).json({message: `error gettin all movies: route /all: \n ${err}`})
+  }
+})
 
 /**
  * get movie
  * for admin and all the other user
  */
 
-router.get("/:id", verify, async (req, res) => {
+router.get("/find/:id", verify, async (req, res) => {
   try {
     const movie = await Movie.findById(req.params.id);
     res.status(200).json(movie);
@@ -82,17 +96,5 @@ router.get("/:id", verify, async (req, res) => {
 
 
 
-/**
- * get all movies
- */
-
-router.get("/all", verify, async (req, res)=>{
-	try{
-		const movies = await Movie.find();
-		res.status(200).json(movies);
-	}catch(err){
-		res.status(500).json({message: `error gettin all movies: route /all: \n ${err}`})
-	}
-})
 
 module.exports = router;

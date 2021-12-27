@@ -12,3 +12,8 @@ export const loginSuccess = (user) =>({
 export const loginFailed = () =>({
     type: "LOGIN_FAILED",
 })
+
+
+export const logOut = ()=>({
+    type: "LOGOUT"
+})

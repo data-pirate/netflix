@@ -1,5 +1,8 @@
-import * as React from 'react';
+import { useContext, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import { MovieContext } from '../../context/MovieContext/MovieContext';
+import { getMovies } from '../../context/MovieContext/apiCall';
+
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -37,6 +40,15 @@ const rows = [
 ];
 
 export default function DataTable() {
+  const {movies, dispatch} = useContext(MovieContext);
+
+  useEffect(()=>{
+    getMovies(dispatch);
+
+  }, [dispatch]);
+
+  console.log(movies)
+
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
